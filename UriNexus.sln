@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UriNexus", "UriNexus\UriNexus.csproj", "{60A8757E-0B58-4110-A2DD-A6BEB4D536D6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UriNexus.Tests", "UriNexus.Tests\UriNexus.Tests.csproj", "{50422046-1F67-44BB-9FCA-EDCC17345295}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{60A8757E-0B58-4110-A2DD-A6BEB4D536D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60A8757E-0B58-4110-A2DD-A6BEB4D536D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60A8757E-0B58-4110-A2DD-A6BEB4D536D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60A8757E-0B58-4110-A2DD-A6BEB4D536D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50422046-1F67-44BB-9FCA-EDCC17345295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50422046-1F67-44BB-9FCA-EDCC17345295}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50422046-1F67-44BB-9FCA-EDCC17345295}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50422046-1F67-44BB-9FCA-EDCC17345295}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CBD3BDBB-C18A-4C25-8215-06F45AEB492B}
+	EndGlobalSection
+EndGlobal
