@@ -12,3 +12,4 @@ global using ToolBX.Eloquentest.Extensions;
 global using ToolBX.UriNexus;
 global using ToolBX.UriNexus.Collections;
 global using ToolBX.UriNexus.Resources;
+global using ToolBX.OPEX;
