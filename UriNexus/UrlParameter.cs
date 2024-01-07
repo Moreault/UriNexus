@@ -1,7 +1,9 @@
 ﻿namespace ToolBX.UriNexus;
 
-public record UrlParameter
+[JsonConverter(typeof(UrlParameterJsonConverter))]
+public sealed record UrlParameter
 {
+    //TODO 3.0.0 required
     public string Name
     {
         get => _name;
@@ -13,16 +15,17 @@ public record UrlParameter
     }
     private readonly string _name = string.Empty;
 
+    //TODO 3.0.0 required
     public object Value
     {
         get => _value;
         init
         {
             if (value == null || value is string valueAsString && string.IsNullOrWhiteSpace(valueAsString)) throw new ArgumentNullException(nameof(Value));
-            _value = value;
+            _value = value.ToString()!;
         }
     }
-    private readonly object _value = string.Empty;
+    private readonly string _value = string.Empty;
 
     public UrlParameter(string name, object value)
     {

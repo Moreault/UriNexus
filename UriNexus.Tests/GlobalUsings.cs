@@ -6,6 +6,7 @@ global using Microsoft.VisualStudio.TestTools.UnitTesting;
 global using System;
 global using System.Collections.Generic;
 global using System.Linq;
+global using ToolBX.Collections.ReadOnly;
 global using ToolBX.Eloquentest;
 global using ToolBX.Eloquentest.Customizations;
 global using ToolBX.Eloquentest.Extensions;

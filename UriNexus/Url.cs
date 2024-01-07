@@ -1,9 +1,6 @@
-﻿using System.Text;
-using ToolBX.Collections.ReadOnly;
+﻿namespace ToolBX.UriNexus;
 
-namespace ToolBX.UriNexus;
-
-public record Url
+public sealed record Url
 {
     /// <summary>
     /// Ex : http
@@ -48,9 +45,9 @@ public record Url
     public IReadOnlyList<string> Path
     {
         get => _path;
-        init => _path = value?.Select(x => x.Trim('/', ' ')).ToReadOnlyList() ?? Array.Empty<string>();
+        init => _path = value?.Select(x => x.Trim('/', ' ')).ToReadOnlyList() ?? ReadOnlyList<string>.Empty;
     }
-    private readonly IReadOnlyList<string> _path = Array.Empty<string>();
+    private readonly IReadOnlyList<string> _path = ReadOnlyList<string>.Empty;
 
     public UrlParameterList Parameters
     {
@@ -87,24 +84,6 @@ public record Url
         {
             Path = Path.Concat(pathList).ToReadOnlyList()!
         };
-    }
-
-    public virtual bool Equals(Url? other)
-    {
-        if (other is null) return false;
-        if (ReferenceEquals(this, other)) return true;
-        return string.Equals(Scheme, other.Scheme, StringComparison.InvariantCultureIgnoreCase) &&
-               UserInfo == other.UserInfo &&
-               string.Equals(Host, other.Host, StringComparison.InvariantCultureIgnoreCase) &&
-               Port == other.Port &&
-               Fragment == other.Fragment &&
-               Parameters.SequenceEqual(other.Parameters) &&
-               Path.SequenceEqual(other.Path);
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(Scheme, UserInfo, Host, Port, Parameters, Fragment, Path);
     }
 
     public override string ToString()
