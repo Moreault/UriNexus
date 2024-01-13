@@ -1,8 +1,9 @@
 ﻿namespace ToolBX.UriNexus.Collections;
 
-public record UrlParameterList : IEnumerable<UrlParameter>, IEquatable<IEnumerable<UrlParameter>>
+[JsonConverter(typeof(UrlParameterListJsonConverter))]
+public sealed record UrlParameterList : IEnumerable<UrlParameter>, IEquatable<IEnumerable<UrlParameter>>
 {
-    private readonly IReadOnlyCollection<UrlParameter> _items;
+    private readonly ReadOnlyList<UrlParameter> _items;
 
     public int Count => _items.Count;
 
@@ -10,7 +11,7 @@ public record UrlParameterList : IEnumerable<UrlParameter>, IEquatable<IEnumerab
 
     public UrlParameterList()
     {
-        _items = Array.Empty<UrlParameter>();
+        _items = ReadOnlyList<UrlParameter>.Empty;
     }
 
     public UrlParameterList(params UrlParameter[] parameters) : this(parameters as IEnumerable<UrlParameter>)
@@ -20,7 +21,7 @@ public record UrlParameterList : IEnumerable<UrlParameter>, IEquatable<IEnumerab
 
     public UrlParameterList(IEnumerable<UrlParameter> parameters)
     {
-        _items = parameters?.ToList() ?? throw new ArgumentNullException(nameof(parameters));
+        _items = parameters?.ToReadOnlyList() ?? throw new ArgumentNullException(nameof(parameters));
     }
 
     public UrlParameterList With(string name, object value) => With(new UrlParameter(name, value));
@@ -50,7 +51,7 @@ public record UrlParameterList : IEnumerable<UrlParameter>, IEquatable<IEnumerab
         return new UrlParameterList(_items.Where(x => !string.Equals(x.Name, name, comparison)));
     }
 
-    public virtual bool Equals(UrlParameterList? other) => Equals(other as IEnumerable<UrlParameter>);
+    public bool Equals(UrlParameterList? other) => Equals(other as IEnumerable<UrlParameter>);
 
     public bool Equals(IEnumerable<UrlParameter>? other)
     {

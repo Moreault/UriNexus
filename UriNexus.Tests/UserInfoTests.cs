@@ -1,7 +1,7 @@
 ﻿namespace UriNexus.Tests;
 
 [TestClass]
-public class UserInfoTester
+public class UserInfoTests
 {
     [TestClass]
     public class ToStringMethod : Tester
