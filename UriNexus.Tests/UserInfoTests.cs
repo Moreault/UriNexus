@@ -10,7 +10,7 @@ public class UserInfoTests
         public void Always_FormatUserNamePasswordSeparated()
         {
             //Arrange
-            var instance = Fixture.Create<UserInfo>();
+            var instance = Dummy.Create<UserInfo>();
 
             //Act
             var result = instance.ToString();

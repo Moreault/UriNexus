@@ -10,7 +10,7 @@ public class UrlParameterTests : RecordTester<UrlParameter>
     public void Name_WhenNullOrEmpty_Throw(string name)
     {
         //Arrange
-        var value = Fixture.Create<object>();
+        var value = Dummy.Create<object>();
 
         //Act
         var action = () => new UrlParameter(name, value);
@@ -23,8 +23,8 @@ public class UrlParameterTests : RecordTester<UrlParameter>
     public void Name_WhenNotNullOrEmpty_SetToValue()
     {
         //Arrange
-        var name = Fixture.Create<string>();
-        var value = Fixture.Create<object>();
+        var name = Dummy.Create<string>();
+        var value = Dummy.Create<object>();
 
         //Act
         var result = new UrlParameter(name, value);
@@ -40,7 +40,7 @@ public class UrlParameterTests : RecordTester<UrlParameter>
     public void Value_WhenNullOrEmpty_Throw(string value)
     {
         //Arrange
-        var name = Fixture.Create<string>();
+        var name = Dummy.Create<string>();
 
         //Act
         var action = () => new UrlParameter(name, value);
@@ -53,8 +53,8 @@ public class UrlParameterTests : RecordTester<UrlParameter>
     public void Value_WhenNotNullOrEmpty_SetToValue()
     {
         //Arrange
-        var name = Fixture.Create<string>();
-        var value = Fixture.Create<object>();
+        var name = Dummy.Create<string>();
+        var value = Dummy.Create<object>();
 
         //Act
         var result = new UrlParameter(name, value);
@@ -67,8 +67,8 @@ public class UrlParameterTests : RecordTester<UrlParameter>
     public void Value_WhenValueIsNotString_SetToWhateverItIs()
     {
         //Arrange
-        var name = Fixture.Create<string>();
-        var value = Fixture.Create<int>();
+        var name = Dummy.Create<string>();
+        var value = Dummy.Create<int>();
 
         //Act
         var result = new UrlParameter(name, value);
@@ -81,7 +81,7 @@ public class UrlParameterTests : RecordTester<UrlParameter>
     public void Value_WhenValueIsNullInt_Throw()
     {
         //Arrange
-        var name = Fixture.Create<string>();
+        var name = Dummy.Create<string>();
         int? value = null!;
 
         //Act
@@ -95,7 +95,7 @@ public class UrlParameterTests : RecordTester<UrlParameter>
     public void ToString_Always_ReturnNameAndValueSeparatedByAnEqualSign()
     {
         //Arrange
-        var instance = Fixture.Create<UrlParameter>();
+        var instance = Dummy.Create<UrlParameter>();
 
         //Act
         var result = instance.ToString();
@@ -105,5 +105,5 @@ public class UrlParameterTests : RecordTester<UrlParameter>
     }
 
     [TestMethod]
-    public void Ensure_IsJsonSerializable() => Ensure.IsJsonSerializable<UrlParameter>(Fixture);
+    public void Ensure_IsJsonSerializable() => Ensure.IsJsonSerializable<UrlParameter>(Dummy);
 }

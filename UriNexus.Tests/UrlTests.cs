@@ -1,3 +1,5 @@
+using UriNexus.Tests.Customizations;
+
 namespace UriNexus.Tests;
 
 [TestClass]
@@ -61,7 +63,7 @@ public class UrlTests : RecordTester<Url>
     public void UserInfo_WhenValueIsNotNull_SetToValue()
     {
         //Arrange
-        var value = Fixture.Create<UserInfo>();
+        var value = Dummy.Create<UserInfo>();
 
         //Act
         var result = new Url { UserInfo = value };
@@ -128,7 +130,7 @@ public class UrlTests : RecordTester<Url>
     public void Port_WhenValueIsNotNull_SetToValue()
     {
         //Arrange
-        var value = Fixture.Create<int>();
+        var value = Dummy.Create<int>();
 
         //Act
         var result = new Url { Port = value };
@@ -156,7 +158,7 @@ public class UrlTests : RecordTester<Url>
     public void Fragment_WhenContainsHashtag_TrimItOut()
     {
         //Arrange
-        var valueWithoutHashtag = Fixture.Create<string>();
+        var valueWithoutHashtag = Dummy.Create<string>();
         var value = $"#{valueWithoutHashtag}";
 
         //Act
@@ -170,7 +172,7 @@ public class UrlTests : RecordTester<Url>
     public void Fragment_WhenContainsNoHashtag_SetAsIs()
     {
         //Arrange
-        var value = Fixture.Create<string>();
+        var value = Dummy.Create<string>();
 
         //Act
         var result = new Url { Fragment = value };
@@ -196,7 +198,7 @@ public class UrlTests : RecordTester<Url>
     public void Path_WhenValueIsNotNull_SetToValue()
     {
         //Arrange
-        var value = Fixture.CreateMany<string>().ToList();
+        var value = Dummy.CreateMany<string>().ToList();
 
         //Act
         var result = new Url { Path = value };
@@ -209,14 +211,14 @@ public class UrlTests : RecordTester<Url>
     public void Path_WhenOriginalPathCollectionIsModified_DoNotModifyUrl()
     {
         //Arrange
-        var value = Fixture.CreateMany<string>().ToList();
+        var value = Dummy.CreateMany<string>().ToList();
         var original = value.ToList();
 
         //Act
         var result = new Url { Path = value };
 
         //Assert
-        value.Add(Fixture.Create<string>());
+        value.Add(Dummy.Create<string>());
         result.Path.Should().BeEquivalentTo(original);
     }
 
@@ -237,7 +239,7 @@ public class UrlTests : RecordTester<Url>
     public void Parameters_WhenValueIsNotNull_SetToValue()
     {
         //Arrange
-        var value = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
+        var value = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
 
         //Act
         var result = new Url { Parameters = value };
@@ -253,9 +255,9 @@ public class UrlTests : RecordTester<Url>
     public void WithParameter_WhenNameIsNullOrEmpty_Throw(string name)
     {
         //Arrange
-        var instance = Fixture.Create<Url>();
+        var instance = Dummy.Create<Url>();
 
-        var value = Fixture.Create<object>();
+        var value = Dummy.Create<object>();
 
         //Act
         var action = () => instance.WithParameter(name, value);
@@ -271,9 +273,9 @@ public class UrlTests : RecordTester<Url>
     public void WithParameter_WhenValueIsNullOrEmpty_Throw(string value)
     {
         //Arrange
-        var instance = Fixture.Create<Url>();
+        var instance = Dummy.Create<Url>();
 
-        var name = Fixture.Create<string>();
+        var name = Dummy.Create<string>();
 
         //Act
         var action = () => instance.WithParameter(name, value);
@@ -286,12 +288,12 @@ public class UrlTests : RecordTester<Url>
     public void WithParameter_WhenParameterWithNameAlreadyExists_Throw()
     {
         //Arrange
-        var existingParameter = Fixture.Create<UrlParameter>();
+        var existingParameter = Dummy.Create<UrlParameter>();
 
-        var instance = Fixture.Create<Url>() with { Parameters = new UrlParameterList(existingParameter) };
+        var instance = Dummy.Create<Url>() with { Parameters = new UrlParameterList(existingParameter) };
 
         //Act
-        var action = () => instance.WithParameter(existingParameter.Name, Fixture.Create<object>());
+        var action = () => instance.WithParameter(existingParameter.Name, Dummy.Create<object>());
 
         //Assert
         action.Should().Throw<Exception>().WithMessage(string.Format(Exceptions.AddingOneDuplicateParameter, existingParameter.Name));
@@ -301,9 +303,9 @@ public class UrlTests : RecordTester<Url>
     public void WithParameter_WhenNameIsUnique_AddParameter()
     {
         //Arrange
-        var instance = Fixture.Create<Url>();
+        var instance = Dummy.Create<Url>();
 
-        var parameter = Fixture.Create<UrlParameter>();
+        var parameter = Dummy.Create<UrlParameter>();
 
         //Act
         var result = instance.WithParameter(parameter.Name, parameter.Value);
@@ -316,10 +318,10 @@ public class UrlTests : RecordTester<Url>
     public void WithParameter_WhenNameIsUnique_DoNotModifyOriginalInstance()
     {
         //Arrange
-        var instance = Fixture.Create<Url>();
+        var instance = Dummy.Create<Url>();
         var original = instance with { };
 
-        var parameter = Fixture.Create<UrlParameter>();
+        var parameter = Dummy.Create<UrlParameter>();
 
         //Act
         instance.WithParameter(parameter.Name, parameter.Value);
@@ -332,8 +334,8 @@ public class UrlTests : RecordTester<Url>
     public void WithParametersParams_WhenOneParameterIsNull_Throw()
     {
         //Arrange
-        var instance = Fixture.Create<Url>();
-        var parameters = Fixture.CreateMany<UrlParameter>().Concat(new UrlParameter[] { null! }).ToArray();
+        var instance = Dummy.Create<Url>();
+        var parameters = Dummy.CreateMany<UrlParameter>().Concat(new UrlParameter[] { null! }).ToArray();
 
         //Act
         var action = () => instance.WithParameters(parameters);
@@ -346,9 +348,9 @@ public class UrlTests : RecordTester<Url>
     public void WithParametersParams_WhenOneParameterHasNameThatAlreadyExistsInCollection_Throw()
     {
         //Arrange
-        var instance = Fixture.Create<Url>();
+        var instance = Dummy.Create<Url>();
         var existingItem = instance.Parameters.GetRandom();
-        var parameters = Fixture.CreateMany<UrlParameter>().Concat(new[] { existingItem }).ToArray();
+        var parameters = Dummy.CreateMany<UrlParameter>().Concat(new[] { existingItem }).ToArray();
 
         //Act
         var action = () => instance.WithParameters(parameters);
@@ -361,9 +363,9 @@ public class UrlTests : RecordTester<Url>
     public void WithParametersParams_WhenMultipleParametersHaveNamesThatAlreadyExistInCollection_Throw()
     {
         //Arrange
-        var instance = Fixture.Create<Url>();
+        var instance = Dummy.Create<Url>();
         var existingItems = new List<UrlParameter> { instance.Parameters.First(), instance.Parameters.Last() };
-        var parameters = Fixture.CreateMany<UrlParameter>().Concat(existingItems).ToArray();
+        var parameters = Dummy.CreateMany<UrlParameter>().Concat(existingItems).ToArray();
 
         //Act
         var action = () => instance.WithParameters(parameters);
@@ -376,8 +378,8 @@ public class UrlTests : RecordTester<Url>
     public void WithParametersParams_WhenAddingNewParameters_ReturnNewInstanceWithParametersAtEnd()
     {
         //Arrange
-        var instance = Fixture.Create<Url>();
-        var parameters = Fixture.CreateMany<UrlParameter>().ToArray();
+        var instance = Dummy.Create<Url>();
+        var parameters = Dummy.CreateMany<UrlParameter>().ToArray();
 
         //Act
         var result = instance.WithParameters(parameters);
@@ -390,9 +392,9 @@ public class UrlTests : RecordTester<Url>
     public void WithParametersParams_WhenAddingNewParameters_DoNotModifyOriginalCollection()
     {
         //Arrange
-        var instance = Fixture.Create<Url>();
+        var instance = Dummy.Create<Url>();
         var original = instance with { };
-        var parameters = Fixture.CreateMany<UrlParameter>().ToArray();
+        var parameters = Dummy.CreateMany<UrlParameter>().ToArray();
 
         //Act
         instance.WithParameters(parameters);
@@ -405,7 +407,7 @@ public class UrlTests : RecordTester<Url>
     public void WithParametersEnumerable_WhenParametersIsNull_Throw()
     {
         //Arrange
-        var instance = Fixture.Create<Url>();
+        var instance = Dummy.Create<Url>();
         IEnumerable<UrlParameter> parameters = null!;
 
         //Act
@@ -419,8 +421,8 @@ public class UrlTests : RecordTester<Url>
     public void WithParametersEnumerable_WhenOneParameterIsNull_Throw()
     {
         //Arrange
-        var instance = Fixture.Create<Url>();
-        var parameters = Fixture.CreateMany<UrlParameter>().Concat(new UrlParameter[] { null! }).ToList();
+        var instance = Dummy.Create<Url>();
+        var parameters = Dummy.CreateMany<UrlParameter>().Concat(new UrlParameter[] { null! }).ToList();
 
         //Act
         var action = () => instance.WithParameters(parameters);
@@ -433,9 +435,9 @@ public class UrlTests : RecordTester<Url>
     public void WithParametersEnumerable_WhenOneParameterHasNameThatAlreadyExistsInCollection_Throw()
     {
         //Arrange
-        var instance = Fixture.Create<Url>();
+        var instance = Dummy.Create<Url>();
         var existingItem = instance.Parameters.GetRandom();
-        var parameters = Fixture.CreateMany<UrlParameter>().Concat(new[] { existingItem }).ToList();
+        var parameters = Dummy.CreateMany<UrlParameter>().Concat(new[] { existingItem }).ToList();
 
         //Act
         var action = () => instance.WithParameters(parameters);
@@ -448,9 +450,9 @@ public class UrlTests : RecordTester<Url>
     public void WithParametersEnumerable_WhenMultipleParametersHaveNamesThatAlreadyExistInCollection_Throw()
     {
         //Arrange
-        var instance = Fixture.Create<Url>();
+        var instance = Dummy.Create<Url>();
         var existingItems = new List<UrlParameter> { instance.Parameters.First(), instance.Parameters.Last() };
-        var parameters = Fixture.CreateMany<UrlParameter>().Concat(existingItems).ToList();
+        var parameters = Dummy.CreateMany<UrlParameter>().Concat(existingItems).ToList();
 
         //Act
         var action = () => instance.WithParameters(parameters);
@@ -463,8 +465,8 @@ public class UrlTests : RecordTester<Url>
     public void WithParametersEnumerable_WhenAddingNewParameters_ReturnNewInstanceWithParametersAtEnd()
     {
         //Arrange
-        var instance = Fixture.Create<Url>();
-        var parameters = Fixture.CreateMany<UrlParameter>().ToList();
+        var instance = Dummy.Create<Url>();
+        var parameters = Dummy.CreateMany<UrlParameter>().ToList();
 
         //Act
         var result = instance.WithParameters(parameters);
@@ -477,9 +479,9 @@ public class UrlTests : RecordTester<Url>
     public void WithParametersEnumerable_WhenAddingNewParameters_DoNotModifyOriginalCollection()
     {
         //Arrange
-        var instance = Fixture.Create<Url>();
+        var instance = Dummy.Create<Url>();
         var original = instance with { };
-        var parameters = Fixture.CreateMany<UrlParameter>().ToList();
+        var parameters = Dummy.CreateMany<UrlParameter>().ToList();
 
         //Act
         instance.WithParameters(parameters);
@@ -498,8 +500,8 @@ public class UrlTests : RecordTester<Url>
         public void AppendPathParams_WhenContainsOneNullOrEmptySegment_Throw(string segment)
         {
             //Arrange
-            var instance = Fixture.Create<Url>();
-            var path = Fixture.CreateMany<string>().Concat(new[] { segment }).ToArray();
+            var instance = Dummy.Create<Url>();
+            var path = Dummy.CreateMany<string>().Concat(new[] { segment }).ToArray();
 
             //Act
             var action = () => instance.AppendPath(path);
@@ -512,7 +514,7 @@ public class UrlTests : RecordTester<Url>
         public void AppendPathParams_WhenPathIsEmpty_ReturnUnmodifiedUrl()
         {
             //Arrange
-            var instance = Fixture.Create<Url>();
+            var instance = Dummy.Create<Url>();
             var path = Array.Empty<string>();
 
             //Act
@@ -526,8 +528,8 @@ public class UrlTests : RecordTester<Url>
         public void AppendPathParams_WhenPathIsNotEmpty_AppendToPath()
         {
             //Arrange
-            var instance = Fixture.Create<Url>();
-            var path = Fixture.CreateMany<string>().ToArray();
+            var instance = Dummy.Create<Url>();
+            var path = Dummy.CreateMany<string>().ToArray();
 
             //Act
             var result = instance.AppendPath(path);
@@ -542,7 +544,7 @@ public class UrlTests : RecordTester<Url>
     public void AppendPathEnumerable_WhenPathIsNull_Throw()
     {
         //Arrange
-        var instance = Fixture.Create<Url>();
+        var instance = Dummy.Create<Url>();
         IEnumerable<string> path = null!;
 
         //Act
@@ -559,8 +561,8 @@ public class UrlTests : RecordTester<Url>
     public void AppendPathEnumerable_WhenContainsOneNullOrEmptySegment_Throw(string segment)
     {
         //Arrange
-        var instance = Fixture.Create<Url>();
-        var path = Fixture.CreateMany<string>().Concat(new[] { segment }).ToReadOnlyList();
+        var instance = Dummy.Create<Url>();
+        var path = Dummy.CreateMany<string>().Concat(new[] { segment }).ToReadOnlyList();
 
         //Act
         var action = () => instance.AppendPath(path);
@@ -573,7 +575,7 @@ public class UrlTests : RecordTester<Url>
     public void AppendPathEnumerable_WhenPathIsEmpty_ReturnUnmodifiedUrl()
     {
         //Arrange
-        var instance = Fixture.Create<Url>();
+        var instance = Dummy.Create<Url>();
         var path = new List<string>();
 
         //Act
@@ -587,8 +589,8 @@ public class UrlTests : RecordTester<Url>
     public void AppendPathEnumerable_WhenPathIsNotEmpty_AppendToPath()
     {
         //Arrange
-        var instance = Fixture.Create<Url>();
-        var path = Fixture.CreateMany<string>().ToReadOnlyList();
+        var instance = Dummy.Create<Url>();
+        var path = Dummy.CreateMany<string>().ToReadOnlyList();
 
         //Act
         var result = instance.AppendPath(path);
@@ -627,7 +629,7 @@ public class UrlTests : RecordTester<Url>
     public void ToString_WhenOnlyContainsUserInfo_OnlyReturnUserInfo()
     {
         //Arrange
-        var instance = new Url { UserInfo = Fixture.Create<UserInfo>() };
+        var instance = new Url { UserInfo = Dummy.Create<UserInfo>() };
 
         //Act
         var result = instance.ToString();
@@ -640,7 +642,7 @@ public class UrlTests : RecordTester<Url>
     public void ToString_WhenOnlyContainsHost_OnlyReturnHost()
     {
         //Arrange
-        var instance = new Url { Host = Fixture.Create<string>() };
+        var instance = new Url { Host = Dummy.Create<string>() };
 
         //Act
         var result = instance.ToString();
@@ -653,7 +655,7 @@ public class UrlTests : RecordTester<Url>
     public void ToString_WhenOnlyContainsPort_OnlyReturnEmpty()
     {
         //Arrange
-        var instance = new Url { Port = Fixture.Create<int>() };
+        var instance = new Url { Port = Dummy.Create<int>() };
 
         //Act
         var result = instance.ToString();
@@ -666,7 +668,7 @@ public class UrlTests : RecordTester<Url>
     public void ToString_WhenOnlyContainsPath_OnlyReturnPath()
     {
         //Arrange
-        var instance = new Url { Path = Fixture.CreateMany<string>().ToReadOnlyList() };
+        var instance = new Url { Path = Dummy.CreateMany<string>().ToReadOnlyList() };
 
         //Act
         var result = instance.ToString();
@@ -679,7 +681,7 @@ public class UrlTests : RecordTester<Url>
     public void ToString_WhenOnlyContainsParameters_OnlyReturnParameters()
     {
         //Arrange
-        var instance = new Url { Parameters = Fixture.Create<UrlParameterList>() };
+        var instance = new Url { Parameters = Dummy.Create<UrlParameterList>() };
 
         //Act
         var result = instance.ToString();
@@ -692,7 +694,7 @@ public class UrlTests : RecordTester<Url>
     public void ToString_WhenOnlyContainsFragment_OnlyReturnFragment()
     {
         //Arrange
-        var instance = new Url { Fragment = Fixture.Create<string>() };
+        var instance = new Url { Fragment = Dummy.Create<string>() };
 
         //Act
         var result = instance.ToString();
@@ -837,7 +839,7 @@ public class UrlTests : RecordTester<Url>
     public void ImplicitStringConverter_WhenUrlIsNotNull_UseToString()
     {
         //Arrange
-        var instance = Fixture.Create<Url>();
+        var instance = Dummy.Create<Url>();
 
         //Act
         string result = instance;
@@ -847,5 +849,5 @@ public class UrlTests : RecordTester<Url>
     }
 
     [TestMethod]
-    public void Ensure_IsJsonSerializable() => Ensure.IsJsonSerializable<Url>(Fixture);
+    public void Ensure_IsJsonSerializable() => Ensure.IsJsonSerializable<Url>(Dummy);
 }
