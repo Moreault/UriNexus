@@ -1,10 +1,9 @@
 ﻿namespace UriNexus.Tests.Customizations;
 
 [AutoCustomization]
-public class UrlParameterListCustomization : ICustomization
+public class UrlParameterListCustomization : CustomizationBase
 {
-    public void Customize(IFixture fixture)
-    {
-        fixture.Customize<UrlParameterList>(x => x.FromFactory(() => fixture.CreateMany<UrlParameter>().ToUrlParameterList()));
-    }
+    protected override IEnumerable<Type> Types => [typeof(UrlParameterList)];
+
+    protected override IDummyBuilder BuildMe(IDummy dummy, Type type) => dummy.Build<UrlParameterList>().FromFactory(() => dummy.CreateMany<UrlParameter>().ToUrlParameterList());
 }

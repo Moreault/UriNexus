@@ -3,8 +3,7 @@
 [JsonConverter(typeof(UrlParameterJsonConverter))]
 public sealed record UrlParameter
 {
-    //TODO 3.0.0 required
-    public string Name
+    public required string Name
     {
         get => _name;
         init
@@ -15,8 +14,7 @@ public sealed record UrlParameter
     }
     private readonly string _name = string.Empty;
 
-    //TODO 3.0.0 required
-    public object Value
+    public required object Value
     {
         get => _value;
         init
@@ -27,6 +25,9 @@ public sealed record UrlParameter
     }
     private readonly string _value = string.Empty;
 
+    public UrlParameter() { }
+
+    [SetsRequiredMembers]
     public UrlParameter(string name, object value)
     {
         Name = name;

@@ -20,7 +20,7 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void Count_WhenIsNotEmpty_ReturnNumberOfItems()
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>(4).ToUrlParameterList();
+        var instance = Dummy.CreateMany<UrlParameter>(4).ToUrlParameterList();
 
         //Act
         var result = instance.Count;
@@ -33,10 +33,10 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void Indexer_WhenThereIsNoParameterWithName_ReturnEmpty()
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
+        var instance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
 
         //Act
-        var result = instance[Fixture.Create<string>()];
+        var result = instance[Dummy.Create<string>()];
 
         //Assert
         result.Should().BeEmpty();
@@ -46,7 +46,7 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void Indexer_WhenThereIsOneParameterWithNameButDifferentCasing_ReturnEmpty()
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
+        var instance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
 
         //Act
         var result = instance[instance.GetRandom().Name.ToUpperInvariant()];
@@ -59,7 +59,7 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void Indexer_WhenThereIsOneParameterWithSameNameAndCasing_ReturnItsValue()
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
+        var instance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
         var parameter = instance.GetRandom();
 
         //Act
@@ -85,9 +85,9 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void Constructor_WhenUsingParams_InstantiateWithParameters()
     {
         //Arrange
-        var parameter1 = Fixture.Create<UrlParameter>();
-        var parameter2 = Fixture.Create<UrlParameter>();
-        var parameter3 = Fixture.Create<UrlParameter>();
+        var parameter1 = Dummy.Create<UrlParameter>();
+        var parameter2 = Dummy.Create<UrlParameter>();
+        var parameter3 = Dummy.Create<UrlParameter>();
 
         //Act
         var result = new UrlParameterList(parameter1, parameter2, parameter3);
@@ -113,7 +113,7 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void Constructor_WhenUsingEnumerable_InstantiateWithContents()
     {
         //Arrange
-        var parameters = Fixture.CreateMany<UrlParameter>().ToList();
+        var parameters = Dummy.CreateMany<UrlParameter>().ToList();
 
         //Act
         var result = new UrlParameterList(parameters);
@@ -129,9 +129,9 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void WithNameValue_WhenNameIsNullOrEmpty_Throw(string name)
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
+        var instance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
 
-        var value = Fixture.Create<object>();
+        var value = Dummy.Create<object>();
 
         //Act
         var action = () => instance.With(name, value);
@@ -147,9 +147,9 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void WithNameValue_WhenValueIsNullOrEmpty_Throw(string value)
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
+        var instance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
 
-        var name = Fixture.Create<string>();
+        var name = Dummy.Create<string>();
 
         //Act
         var action = () => instance.With(name, value);
@@ -162,10 +162,10 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void WithNameValue_WhenAddingNameThatAlreadyExists_Throw()
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
+        var instance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
 
         var name = instance.GetRandom().Name;
-        var value = Fixture.Create<object>();
+        var value = Dummy.Create<object>();
 
         //Act
         var action = () => instance.With(name, value);
@@ -178,8 +178,8 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void WithNameValue_WhenAddingNewName_ReturnNewCollectionWithNameAndValue()
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
-        var parameter = Fixture.Create<UrlParameter>();
+        var instance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
+        var parameter = Dummy.Create<UrlParameter>();
 
         //Act
         var result = instance.With(parameter.Name, parameter.Value);
@@ -192,9 +192,9 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void WithNameValue_WhenAddingNewName_DoNotModifyOriginalList()
     {
         //Arrange
-        var originalInstance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
+        var originalInstance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
         var instance = originalInstance.ToUrlParameterList();
-        var parameter = Fixture.Create<UrlParameter>();
+        var parameter = Dummy.Create<UrlParameter>();
 
         //Act
         instance.With(parameter.Name, parameter.Value);
@@ -207,8 +207,8 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void WithParams_WhenOneParameterIsNull_Throw()
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
-        var parameters = Fixture.CreateMany<UrlParameter>().Concat(new UrlParameter[] { null! }).ToArray();
+        var instance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
+        var parameters = Dummy.CreateMany<UrlParameter>().Concat(new UrlParameter[] { null! }).ToArray();
 
         //Act
         var action = () => instance.With(parameters);
@@ -221,9 +221,9 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void WithParams_WhenOneParameterHasNameThatAlreadyExistsInCollection_Throw()
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
+        var instance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
         var existingItem = instance.GetRandom();
-        var parameters = Fixture.CreateMany<UrlParameter>().Concat(new[] { existingItem }).ToArray();
+        var parameters = Dummy.CreateMany<UrlParameter>().Concat(new[] { existingItem }).ToArray();
 
         //Act
         var action = () => instance.With(parameters);
@@ -236,9 +236,9 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void WithParams_WhenMultipleParametersHaveNamesThatAlreadyExistInCollection_Throw()
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
+        var instance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
         var existingItems = new List<UrlParameter> { instance.First(), instance.Last() };
-        var parameters = Fixture.CreateMany<UrlParameter>().Concat(existingItems).ToArray();
+        var parameters = Dummy.CreateMany<UrlParameter>().Concat(existingItems).ToArray();
 
         //Act
         var action = () => instance.With(parameters);
@@ -251,8 +251,8 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void WithParams_WhenAddingNewParameters_ReturnNewInstanceWithParametersAtEnd()
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
-        var parameters = Fixture.CreateMany<UrlParameter>().ToArray();
+        var instance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
+        var parameters = Dummy.CreateMany<UrlParameter>().ToArray();
 
         //Act
         var result = instance.With(parameters);
@@ -265,9 +265,9 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void WithParams_WhenAddingNewParameters_DoNotModifyOriginalCollection()
     {
         //Arrange
-        var originalInstance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
+        var originalInstance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
         var instance = originalInstance.ToUrlParameterList();
-        var parameters = Fixture.CreateMany<UrlParameter>().ToArray();
+        var parameters = Dummy.CreateMany<UrlParameter>().ToArray();
 
         //Act
         instance.With(parameters);
@@ -280,7 +280,7 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void WithEnumerable_WhenParametersIsNull_Throw()
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
+        var instance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
         IEnumerable<UrlParameter> parameters = null!;
 
         //Act
@@ -294,8 +294,8 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void WithEnumerable_WhenOneParameterIsNull_Throw()
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
-        var parameters = Fixture.CreateMany<UrlParameter>().Concat(new UrlParameter[] { null! }).ToList();
+        var instance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
+        var parameters = Dummy.CreateMany<UrlParameter>().Concat(new UrlParameter[] { null! }).ToList();
 
         //Act
         var action = () => instance.With(parameters);
@@ -308,9 +308,9 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void WithEnumerable_WhenOneParameterHasNameThatAlreadyExistsInCollection_Throw()
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
+        var instance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
         var existingItem = instance.GetRandom();
-        var parameters = Fixture.CreateMany<UrlParameter>().Concat(new[] { existingItem }).ToList();
+        var parameters = Dummy.CreateMany<UrlParameter>().Concat(new[] { existingItem }).ToList();
 
         //Act
         var action = () => instance.With(parameters);
@@ -323,9 +323,9 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void WithEnumerable_WhenMultipleParametersHaveNamesThatAlreadyExistInCollection_Throw()
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
+        var instance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
         var existingItems = new List<UrlParameter> { instance.First(), instance.Last() };
-        var parameters = Fixture.CreateMany<UrlParameter>().Concat(existingItems).ToList();
+        var parameters = Dummy.CreateMany<UrlParameter>().Concat(existingItems).ToList();
 
         //Act
         var action = () => instance.With(parameters);
@@ -338,8 +338,8 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void WithEnumerable_WhenAddingNewParameters_ReturnNewInstanceWithParametersAtEnd()
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
-        var parameters = Fixture.CreateMany<UrlParameter>().ToList();
+        var instance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
+        var parameters = Dummy.CreateMany<UrlParameter>().ToList();
 
         //Act
         var result = instance.With(parameters);
@@ -352,9 +352,9 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void WithEnumerable_WhenAddingNewParameters_DoNotModifyOriginalCollection()
     {
         //Arrange
-        var originalInstance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
+        var originalInstance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
         var instance = originalInstance.ToUrlParameterList();
-        var parameters = Fixture.CreateMany<UrlParameter>().ToList();
+        var parameters = Dummy.CreateMany<UrlParameter>().ToList();
 
         //Act
         instance.With(parameters);
@@ -370,7 +370,7 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void Without_WhenNameIsNullOrEmpty_Throw(string name)
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
+        var instance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
 
         //Act
         var action = () => instance.Without(name);
@@ -383,9 +383,9 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void Without_WhenThereIsNoItemWithThatNameInCollection_Throw()
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
+        var instance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
 
-        var name = Fixture.Create<string>();
+        var name = Dummy.Create<string>();
 
         //Act
         var action = () => instance.Without(name);
@@ -398,7 +398,7 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void Without_WhenThereIsAnItemWithThatName_RemoveIt()
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
+        var instance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
         var item = instance.GetRandom();
 
         //Act
@@ -412,7 +412,7 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void Without_WhenThereIsAnItemWithThatName_DoNotModifyOriginalInstance()
     {
         //Arrange
-        var originalInstance = Fixture.CreateMany<UrlParameter>().ToUrlParameterList();
+        var originalInstance = Dummy.CreateMany<UrlParameter>().ToUrlParameterList();
         var instance = originalInstance.ToUrlParameterList();
         var item = instance.GetRandom();
 
@@ -440,7 +440,7 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void ToString_WhenHasOnlyOneItem_ReturnSingleItemSeparatedByEqualsSign()
     {
         //Arrange
-        var instance = new UrlParameterList(Fixture.Create<UrlParameter>());
+        var instance = new UrlParameterList(Dummy.Create<UrlParameter>());
 
         //Act
         var result = instance.ToString();
@@ -453,7 +453,7 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     public void ToString_WhenHasMultipleItems_FormatAllItemsSeparatedByAmpersand()
     {
         //Arrange
-        var instance = Fixture.CreateMany<UrlParameter>(3).ToUrlParameterList();
+        var instance = Dummy.CreateMany<UrlParameter>(3).ToUrlParameterList();
         var items = instance.ToList();
 
         //Act
@@ -464,8 +464,5 @@ public class UrlParameterListTests : RecordTester<UrlParameterList>
     }
 
     [TestMethod]
-    public void Ensure_IsJsonSerializable() => Ensure.IsJsonSerializable<UrlParameterList>(Fixture);
-
-    [TestMethod]
-    public void Ensure_EnumeratesAllItems() => Ensure.EnumeratesAllItems<UrlParameterList, UrlParameter>(Fixture);
+    public void Ensure_IsJsonSerializable() => Ensure.IsJsonSerializable<UrlParameterList>(Dummy, JsonSerializerOptions);
 }

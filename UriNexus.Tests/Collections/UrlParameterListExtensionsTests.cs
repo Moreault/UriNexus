@@ -20,7 +20,7 @@ public class UrlParameterListExtensionsTests : Tester
     public void ToQueryParameterList_WhenIsNotNull_ReturnAsUrlParameterList()
     {
         //Arrange
-        var parameters = Fixture.CreateMany<UrlParameter>().ToArray();
+        var parameters = Dummy.CreateMany<UrlParameter>().ToArray();
 
         //Act
         var result = parameters.ToUrlParameterList();
