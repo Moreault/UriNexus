@@ -2,6 +2,8 @@
 
 public sealed class UrlParameterListJsonConverter : JsonConverter<UrlParameterList>
 {
+    private static readonly UrlParameterJsonConverter ParameterConverter = new();
+
     public override UrlParameterList Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         if (reader.TokenType != JsonTokenType.StartArray)
@@ -17,11 +19,7 @@ public sealed class UrlParameterListJsonConverter : JsonConverter<UrlParameterLi
                 break;
             }
 
-            var parameter = JsonSerializer.Deserialize<UrlParameter>(ref reader, options);
-            if (parameter != null)
-            {
-                parameters.Add(parameter);
-            }
+            parameters.Add(ParameterConverter.Read(ref reader, typeof(UrlParameter), options));
         }
 
         return new UrlParameterList(parameters);
@@ -32,7 +30,7 @@ public sealed class UrlParameterListJsonConverter : JsonConverter<UrlParameterLi
         writer.WriteStartArray();
         foreach (var item in value)
         {
-            JsonSerializer.Serialize(writer, item, options);
+            ParameterConverter.Write(writer, item, options);
         }
         writer.WriteEndArray();
     }
