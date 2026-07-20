@@ -1,5 +1,3 @@
-using UriNexus.Tests.Customizations;
-
 namespace UriNexus.Tests;
 
 [TestClass]

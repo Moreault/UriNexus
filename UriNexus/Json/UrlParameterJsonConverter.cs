@@ -26,10 +26,10 @@ public sealed class UrlParameterJsonConverter : JsonConverter<UrlParameter>
                 switch (propertyName)
                 {
                     case "Name":
-                        name = reader.GetString();
+                        name = reader.GetString() ?? string.Empty;
                         break;
                     case "Value":
-                        value = reader.GetString();
+                        value = reader.GetString() ?? string.Empty;
                         break;
                 }
             }
